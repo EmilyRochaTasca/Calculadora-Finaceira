@@ -107,5 +107,22 @@ def calcular_diferenca_juros(capital_inicial: float, taxa_anual: float, tempo_an
     --------
         float: A diferença entre o montate resultante do calculo do juros composto e o montante do calculo do juros simples, arredondado para 2 casas decimais.
     """
-    
-    return None
+        #  Validação de valores
+    for valor in  (capital_inicial,taxa_anual,tempo_anos):
+        if not isinstance(valor,(int,float)):
+            raise ValueError("Valor Inválido")
+        if valor < 0 :
+            raise ValueError("Valor Inválido")
+        #  Se algum  valor que zera o cálculo, retorna 0.0
+        if capital_inicial == 0 or taxa_anual == 0 or tempo_anos == 0:
+            return 0.0
+
+    # Cálculo juros simples: MS = C + J = C + C * i * t = C * (1 + i * t)
+    ms = capital_inicial * (1 + (taxa_anual / 100) * tempo_anos)
+
+    # Cálculo juros compostos: MC = C * (1 + i)^t
+    mc = capital_inicial * (1 + (taxa_anual / 100)) ** tempo_anos
+
+    diferenca = mc - ms
+
+    return round(diferenca, 2)
