@@ -1,0 +1,12 @@
+ python -m pytest --html=doc_testes.html
+  python -m pytest --cov=. --cov-report=html
+
+
+  Oq enviar  para o professor:
+    casos_teste.xlsx
+    doc_teste.pdf
+    doc_teste_cobertura.pdf
+    test_juros_simples.py
+    test_juros_composto.py
+    test_diferenca_juros.py
+    calculadora_financeira.py
