@@ -56,7 +56,29 @@ def calcular_juros_simples(capital_inicial: float, taxa_anual: float, tempo_anos
 
 
 def calcular_juros_compostos(capital_investido:float, taxa_juros:float, tempo:int) -> tuple:
-    return None
+    # Validação do capital investido
+    if not isinstance(capital_investido, (int, float)):
+        raise ValueError("O capital investido deve ser um número (int ou float).")
+    if capital_investido < 0:
+        raise ValueError("O capital investido não pode ser negativo.")
+
+    # Validação da taxa de juros
+    if not isinstance(taxa_juros, (int, float)):
+        raise ValueError("A taxa de juros deve ser um número (int ou float).")
+    if taxa_juros < 0:
+        raise ValueError("A taxa de juros não pode ser negativa.")
+
+    # Validação do tempo
+    if not isinstance(tempo, (int, float)):
+        raise ValueError("O tempo deve ser um número (int ou float).")
+    if tempo < 0:
+        raise ValueError("O tempo não pode ser negativo.")
+
+    # Cálculo dos juros compostos
+    montante = capital_investido * (1 + taxa_juros / 100) ** tempo
+    juros = montante - capital_investido
+    
+    return juros, montante
 
 
 
