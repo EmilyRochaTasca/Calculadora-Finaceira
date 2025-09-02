@@ -1,5 +1,7 @@
- python -m pytest --html=doc_testes.html
-  python -m pytest --cov=. --cov-report=html
+    python -m pytest --html=doc_testes.html
+    python -m pytest --cov=. --cov-report=html
+    pip install pytest-html
+    pip install pytest-cov
 
 
   Oq enviar  para o professor:
