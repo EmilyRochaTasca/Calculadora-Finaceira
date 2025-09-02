@@ -82,48 +82,49 @@ def calcular_juros_compostos(capital_investido:float, taxa_juros:float, tempo:in
 
 
 
+
 def calcular_diferenca_juros(capital_inicial: float, taxa_anual: float, tempo_anos: float) -> float:
     """
-    Calcula a diferença de juros entre o calculo do montante do juros composto e o montante do juros simples a partir de um capital inicial, uma taxa de juros e um período de tempo.
+    Calcula a diferença de juros entre o cálculo do montante de juros composto e o montante de juros simples,
+    dado um capital inicial, uma taxa de juros anual e um período de tempo.
 
-    A fórmula usada para calcular os juros compostos é:
-        diferenca_juros = MC - MS
-    Onde:
-        MC = Montante final do calculo de juros composto
-        MS = Montante final do calculo de juros simples
+    Args:
+        capital_inicial (float): O valor do capital inicial. Deve ser um número não negativo.
+        taxa_anual (float): A taxa de juros anual em porcentagem (ex: 5 para 5%). Deve ser um número não negativo.
+        tempo_anos (float): O tempo do investimento em anos. Deve ser um número não negativo.
 
-    Parâmetros:
-    -----------
-    capital_investido : float
-        O valor do capital inicial (P). Deve ser um número não negativo.
-    
-    taxa_juros : float
-        A taxa de juros anual (r), expressa em porcentagem (ex: 5 para 5%). Deve ser um número não negativo.
+    Returns:
+        float: A diferença entre o montante com juros compostos e o montante com juros simples, arredondado para 2 casas decimais.
 
-    tempo : float
-        O tempo de investimento (t), em anos ou períodos definidos. Deve ser um número não negativo.
-
-    Retorno:
-    --------
-        float: A diferença entre o montate resultante do calculo do juros composto e o montante do calculo do juros simples, arredondado para 2 casas decimais.
+    Raises:
+        TypeError: Se qualquer argumento não for número (int ou float).
+        ValueError: Se qualquer argumento for número negativo.
     """
-        #  Validação de valores
-    for valor in  (capital_inicial,taxa_anual,tempo_anos):
-        if not isinstance(valor,(int,float)):
-            raise ValueError("Valor Inválido")
-        if valor < 0 :
-            raise ValueError("Valor Inválido")
-        #  Se algum  valor que zera o cálculo, retorna 0.0
-        if capital_inicial == 0 or taxa_anual == 0 or tempo_anos == 0:
-            return ValueError("Valor Inválido ")
 
+    # Verifica se todos os parâmetros são do tipo numérico (int ou float)
+    if not isinstance(capital_inicial, (int, float)):
+        raise TypeError("capital_inicial deve ser um número (int ou float).")
+    if not isinstance(taxa_anual, (int, float)):
+        raise TypeError("taxa_anual deve ser um número (int ou float).")
+    if not isinstance(tempo_anos, (int, float)):
+        raise TypeError("tempo_anos deve ser um número (int ou float).")
 
-    # Cálculo juros simples: MS = C + J = C + C * i * t = C * (1 + i * t)
-    ms = capital_inicial * (1 + (taxa_anual / 100) * tempo_anos)
+    # Verifica se os valores são não negativos
+    if capital_inicial < 0:
+        raise ValueError("capital_inicial não pode ser negativo.")
+    if taxa_anual < 0:
+        raise ValueError("taxa_anual não pode ser negativo.")
+    if tempo_anos < 0:
+        raise ValueError("tempo_anos não pode ser negativo.")
 
-    # Cálculo juros compostos: MC = C * (1 + i)^t
-    mc = capital_inicial * (1 + (taxa_anual / 100)) ** tempo_anos
+    # Calcula o montante com juros simples
+    montante_juros_simples = calcular_juros_simples(capital_inicial, taxa_anual, tempo_anos)
 
-    diferenca = mc - ms
+    # Calcula o montante com juros compostos
+    _, montante_juros_compostos = calcular_juros_compostos(capital_inicial, taxa_anual, tempo_anos)
 
+    # Calcula a diferença entre os dois montantes
+    diferenca = montante_juros_compostos - montante_juros_simples
+
+    # Retorna a diferença arredondada para 2 casas decimais
     return round(diferenca, 2)
