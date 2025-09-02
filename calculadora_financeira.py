@@ -85,31 +85,35 @@ def calcular_juros_compostos(capital_investido:float, taxa_juros:float, tempo:in
 
 def calcular_diferenca_juros(capital_inicial: float, taxa_anual: float, tempo_anos: float) -> float:
     """
-    Calcula a diferença de juros entre o cálculo do montante de juros composto e o montante de juros simples,
-    dado um capital inicial, uma taxa de juros anual e um período de tempo.
+    Calcula a diferença entre o montante do juros composto e o montante do juros simples,
+    dado um capital inicial, taxa anual e tempo em anos.
 
     Args:
-        capital_inicial (float): O valor do capital inicial. Deve ser um número não negativo.
-        taxa_anual (float): A taxa de juros anual em porcentagem (ex: 5 para 5%). Deve ser um número não negativo.
-        tempo_anos (float): O tempo do investimento em anos. Deve ser um número não negativo.
+        capital_inicial (float): Capital inicial não negativo.
+        taxa_anual (float): Taxa anual em % não negativa.
+        tempo_anos (float): Tempo do investimento em anos, não negativo.
 
     Returns:
-        float: A diferença entre o montante com juros compostos e o montante com juros simples, arredondado para 2 casas decimais.
+        float: Diferença entre montantes (juros compostos - juros simples), arredondada para 2 casas decimais.
 
     Raises:
-        TypeError: Se qualquer argumento não for número (int ou float).
-        ValueError: Se qualquer argumento for número negativo.
+        TypeError: Se algum argumento não for numérico (int ou float).
+        ValueError: Se algum argumento for negativo.
     """
 
-    # Verifica se todos os parâmetros são do tipo numérico (int ou float)
+    # Verifica se 'capital_inicial' é int ou float, senão levanta erro
     if not isinstance(capital_inicial, (int, float)):
         raise TypeError("capital_inicial deve ser um número (int ou float).")
+
+    # Verifica se 'taxa_anual' é int ou float, senão levanta erro
     if not isinstance(taxa_anual, (int, float)):
         raise TypeError("taxa_anual deve ser um número (int ou float).")
+
+    # Verifica se 'tempo_anos' é int ou float, senão levanta erro
     if not isinstance(tempo_anos, (int, float)):
         raise TypeError("tempo_anos deve ser um número (int ou float).")
 
-    # Verifica se os valores são não negativos
+    # Verifica se valores são negativos e levanta erro se for o caso
     if capital_inicial < 0:
         raise ValueError("capital_inicial não pode ser negativo.")
     if taxa_anual < 0:
@@ -117,14 +121,16 @@ def calcular_diferenca_juros(capital_inicial: float, taxa_anual: float, tempo_an
     if tempo_anos < 0:
         raise ValueError("tempo_anos não pode ser negativo.")
 
-    # Calcula o montante com juros simples
-    montante_juros_simples = calcular_juros_simples(capital_inicial, taxa_anual, tempo_anos)
+    # Chama a função que calcula o montante de juros simples e salva o resultado
+    montante_simples = calcular_juros_simples(capital_inicial, taxa_anual, tempo_anos)
 
-    # Calcula o montante com juros compostos
-    _, montante_juros_compostos = calcular_juros_compostos(capital_inicial, taxa_anual, tempo_anos)
+    # Chama a função que calcula os juros compostos
+    # Essa função retorna uma tupla: (juros, montante)
+    # Queremos só o  montante, usamos '_' para ignorar o primeiro valor
+    _, montante_composto = calcular_juros_compostos(capital_inicial, taxa_anual, tempo_anos)
 
-    # Calcula a diferença entre os dois montantes
-    diferenca = montante_juros_compostos - montante_juros_simples
+    # Calcula a diferença entre o montante composto e o simples
+    diferenca = montante_composto - montante_simples
 
     # Retorna a diferença arredondada para 2 casas decimais
     return round(diferenca, 2)
