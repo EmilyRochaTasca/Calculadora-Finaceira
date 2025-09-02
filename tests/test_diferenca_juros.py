@@ -18,7 +18,7 @@ def test_taxa_zero():
     assert calcular_diferenca_juros(1000, 0, 5) == 0.0
 
 def test_numero_decimal():
-    assert calcular_diferenca_juros(1500.50, 4.5, 3.2) == pytest.approx(34.57, 0.01)
+    assert calcular_diferenca_juros(1500.50, 4.5, 3.2) == pytest.approx(10.89, 0.01)
 
 
 # Testes com entradas inválidas (strings, negativos)
