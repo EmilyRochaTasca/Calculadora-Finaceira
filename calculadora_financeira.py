@@ -115,7 +115,8 @@ def calcular_diferenca_juros(capital_inicial: float, taxa_anual: float, tempo_an
             raise ValueError("Valor Inválido")
         #  Se algum  valor que zera o cálculo, retorna 0.0
         if capital_inicial == 0 or taxa_anual == 0 or tempo_anos == 0:
-            return 0.0
+            return ValueError("Valor Inválido ")
+
 
     # Cálculo juros simples: MS = C + J = C + C * i * t = C * (1 + i * t)
     ms = capital_inicial * (1 + (taxa_anual / 100) * tempo_anos)

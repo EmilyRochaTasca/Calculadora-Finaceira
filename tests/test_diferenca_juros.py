@@ -3,7 +3,6 @@ from calculadora_financeira import calcular_diferenca_juros
 
 
 
-# Teste com valores válidos
 def test_valores_validos():
     assert calcular_diferenca_juros(1000, 5, 2) == 2.5
 
