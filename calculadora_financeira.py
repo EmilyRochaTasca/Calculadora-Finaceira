@@ -36,7 +36,22 @@ def calcular_juros_simples(capital_inicial: float, taxa_anual: float, tempo_anos
         >>> calcular_juros_simples(2500.00, 3.5, 10.0)
         3375.00
     """
+  # Validação de tipos: apenas int ou float
+    if not isinstance(capital_inicial, (int, float)):
+        raise TypeError("Todos os parâmetros devem ser números (int ou float).")
+    if not isinstance(taxa_anual, (int, float)):
+        raise TypeError("Todos os parâmetros devem ser números (int ou float).")
+    if not isinstance(tempo_anos, (int, float)):
+        raise TypeError("Todos os parâmetros devem ser números (int ou float).")
 
+    # Validação de valores não-negativos
+    if capital_inicial < 0 or taxa_anual < 0 or tempo_anos < 0:
+        raise ValueError("O principal, a taxa e o tempo devem ser valores não-negativos.")
+
+    # Cálculo do montante com juros simples
+    montante = capital_inicial * (1 + (taxa_anual / 100) * tempo_anos)
+
+    return round(montante, 2)
       
 
 
